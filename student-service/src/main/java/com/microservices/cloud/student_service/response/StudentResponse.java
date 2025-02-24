@@ -12,17 +12,14 @@ public class StudentResponse {
 
 	private String email;
 
-	private String street;
+	private AddressResponse addressResponse;
 
-	private String city;
-
-	public StudentResponse(long id, String firstName, String lastName, String email, String street, String city) {
+	public StudentResponse(long id, String firstName, String lastName, String email, AddressResponse addressResponse) {
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
-		this.street = street;
-		this.city = city;
+		this.addressResponse = addressResponse;
 	}
 
 	public StudentResponse() {
@@ -60,20 +57,13 @@ public class StudentResponse {
 		this.email = email;
 	}
 
-	public String getStreet() {
-		return street;
+	public AddressResponse getAddressResponse() {
+		return addressResponse;
 	}
 
-	public void setStreet(String street) {
-		this.street = street;
+	public void setAddressResponse(AddressResponse addressResponse) {
+		this.addressResponse = addressResponse;
 	}
-
-	public String getCity() {
-		return city;
-	}
-
-	public void setCity(String city) {
-		this.city = city;
-	}
-
 }
+
+
