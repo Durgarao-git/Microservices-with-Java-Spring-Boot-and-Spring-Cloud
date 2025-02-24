@@ -31,10 +31,6 @@ public class StudentController {
 		return studentService.getById(id);
 	}
 
-	@PostMapping("/addstudent")
-	public Student createStudent(@RequestBody Student student){
-		return studentService.createStudent1(student);
-	}
 
 
 	

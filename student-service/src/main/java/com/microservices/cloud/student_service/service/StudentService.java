@@ -50,8 +50,4 @@ public class StudentService {
 		return addressResponseMono.block();
 	}
 
-	public Student createStudent1(Student student) {
-
-		return studentRepository.save(student);
-	}
 }
