@@ -1,5 +1,6 @@
 package com.microservices.cloud.student_service.controller;
 
+import com.microservices.cloud.student_service.entity.Student;
 import com.microservices.cloud.student_service.request.CreateStudentRequest;
 import com.microservices.cloud.student_service.response.StudentResponse;
 import com.microservices.cloud.student_service.service.StudentService;
@@ -29,5 +30,12 @@ public class StudentController {
 	public StudentResponse getById (@PathVariable long id) {
 		return studentService.getById(id);
 	}
+
+	@PostMapping("/addstudent")
+	public Student createStudent(@RequestBody Student student){
+		return studentService.createStudent1(student);
+	}
+
+
 	
 }
