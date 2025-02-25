@@ -1,6 +1,7 @@
 package com.microservices.cloud.student_service.service;
 
 import com.microservices.cloud.student_service.entity.Student;
+import com.microservices.cloud.student_service.feignClients.AddressFeignClient;
 import com.microservices.cloud.student_service.repository.StudentRepository;
 import com.microservices.cloud.student_service.request.CreateStudentRequest;
 import com.microservices.cloud.student_service.response.AddressResponse;
@@ -24,6 +25,9 @@ public class StudentService {
 	@Autowired
 	WebClient webClient;
 
+	@Autowired
+	AddressFeignClient addressFeignClient;
+
 
 	public StudentResponse createStudent(CreateStudentRequest createStudentRequest) {
 
@@ -39,7 +43,13 @@ public class StudentService {
 	public StudentResponse getById (long id) {
 		Student student=studentRepository.findById(id).get();
 		StudentResponse studentResponse=modelMapper.map(student,StudentResponse.class);
-		studentResponse.setAddressResponse(getAddressById(student.getAddressId()));
+
+//		Using WebClient
+//		studentResponse.setAddressResponse(getAddressById(student.getAddressId()));
+
+		//Using Open Feign
+		studentResponse.setAddressResponse(addressFeignClient.getAddressById(student.getAddressId()));
+
 		return  studentResponse;
 	}
 
