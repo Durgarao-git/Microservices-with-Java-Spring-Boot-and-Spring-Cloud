@@ -5,9 +5,10 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-@FeignClient(url="${address.service.url}", value="address-feign-client")
+//@FeignClient(url="${address.service.url}", value="address-feign-client") #without Eureka
+@FeignClient( name="address-service")
 public interface AddressFeignClient {
 
-    @GetMapping("/getById/{id}")
+    @GetMapping("api/address/getById/{id}")
     public AddressResponse getAddressById(@PathVariable Long id);
 }

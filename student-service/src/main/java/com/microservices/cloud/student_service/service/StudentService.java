@@ -7,6 +7,8 @@ import com.microservices.cloud.student_service.request.CreateStudentRequest;
 import com.microservices.cloud.student_service.response.AddressResponse;
 import com.microservices.cloud.student_service.response.StudentResponse;
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -27,6 +29,8 @@ public class StudentService {
 
 	@Autowired
 	AddressFeignClient addressFeignClient;
+
+	public static final Logger LOGGER= LoggerFactory.getLogger(StudentService.class);
 
 
 	public StudentResponse createStudent(CreateStudentRequest createStudentRequest) {

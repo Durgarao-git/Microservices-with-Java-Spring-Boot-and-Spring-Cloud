@@ -22,6 +22,8 @@ public class AddressService {
     @Autowired
     ModelMapper modelMapper;
 
+    public static final Logger LOGGER= LoggerFactory.getLogger(AddressService.class);
+
     public AddressResponse createAddress(CreateAddressRequest createAddressRequest) {
 
         Address address=modelMapper.map(createAddressRequest,Address.class);
