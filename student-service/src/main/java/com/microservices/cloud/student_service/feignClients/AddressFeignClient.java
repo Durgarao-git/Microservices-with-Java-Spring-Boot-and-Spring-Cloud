@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 //@FeignClient(url="${address.service.url}", value="address-feign-client") #without Eureka
-@FeignClient( name="address-service")
+@FeignClient( name="api-gateway")
 public interface AddressFeignClient {
 
-    @GetMapping("api/address/getById/{id}")
+    @GetMapping("/address-service/api/address/getById/{id}")
     public AddressResponse getAddressById(@PathVariable Long id);
 }

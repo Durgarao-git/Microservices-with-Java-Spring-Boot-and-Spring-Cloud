@@ -6,6 +6,7 @@ import com.microservices.cloud.student_service.repository.StudentRepository;
 import com.microservices.cloud.student_service.request.CreateStudentRequest;
 import com.microservices.cloud.student_service.response.AddressResponse;
 import com.microservices.cloud.student_service.response.StudentResponse;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,6 +31,9 @@ public class StudentService {
 	@Autowired
 	AddressFeignClient addressFeignClient;
 
+	@Autowired
+	CommonService commonService;
+
 	public static final Logger LOGGER= LoggerFactory.getLogger(StudentService.class);
 
 
@@ -37,9 +41,11 @@ public class StudentService {
 
 		Student student=modelMapper.map(createStudentRequest,Student.class);
 		Student savedStudent = studentRepository.save(student);
-
 		StudentResponse studentResponse=modelMapper.map(savedStudent,StudentResponse.class);
-		studentResponse.setAddressResponse(getAddressById(savedStudent.getAddressId()));
+
+//		studentResponse.setAddressResponse(getAddressById(savedStudent.getAddressId()));
+
+		studentResponse.setAddressResponse(commonService.getAddressById(student.getAddressId()));
 
 		return studentResponse;
 	}
@@ -52,16 +58,31 @@ public class StudentService {
 //		studentResponse.setAddressResponse(getAddressById(student.getAddressId()));
 
 		//Using Open Feign
-		studentResponse.setAddressResponse(addressFeignClient.getAddressById(student.getAddressId()));
+//		studentResponse.setAddressResponse(addressFeignClient.getAddressById(student.getAddressId()));
+
+		studentResponse.setAddressResponse(commonService.getAddressById(student.getAddressId()));
 
 		return  studentResponse;
 	}
 
-	public AddressResponse getAddressById(Long addressId){
-		Mono<AddressResponse> addressResponseMono=webClient.get().uri("/getById/"+addressId).retrieve()
-				.bodyToMono(AddressResponse.class);
 
-		return addressResponseMono.block();
-	}
+//	@CircuitBreaker(name="addressService", fallbackMethod = "fallbackGetAddressById")
+//	public AddressResponse getAddressById(Long addressId) {
+//		AddressResponse addressResponse=addressFeignClient.getAddressById(addressId);
+//
+//		return addressResponse;
+//	}
+//
+//	public AddressResponse fallbackGetAddressById(Long addressId,Throwable th) {
+//		return new AddressResponse();
+//	}
+
+
+//	public AddressResponse getAddressById(Long addressId){
+//		Mono<AddressResponse> addressResponseMono=webClient.get().uri("/getById/"+addressId).retrieve()
+//				.bodyToMono(AddressResponse.class);
+//
+//		return addressResponseMono.block();
+//	}
 
 }
