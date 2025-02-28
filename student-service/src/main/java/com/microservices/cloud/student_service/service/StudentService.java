@@ -34,7 +34,7 @@ public class StudentService {
 	@Autowired
 	CommonService commonService;
 
-	public static final Logger LOGGER= LoggerFactory.getLogger(StudentService.class);
+	public static final Logger logger= LoggerFactory.getLogger(StudentService.class);
 
 
 	public StudentResponse createStudent(CreateStudentRequest createStudentRequest) {
@@ -51,6 +51,8 @@ public class StudentService {
 	}
 	
 	public StudentResponse getById (long id) {
+		logger.info("Inside getStudentById ");
+
 		Student student=studentRepository.findById(id).get();
 		StudentResponse studentResponse=modelMapper.map(student,StudentResponse.class);
 
